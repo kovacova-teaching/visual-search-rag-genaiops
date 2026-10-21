@@ -15,10 +15,9 @@ scikit-learn
 Pillow
 httpx
 pandas
-mlflow<=3.5.0
+mlflow>=3.11.0
 azureml-mlflow
 azure-ai-contentsafety
-pytest
 pytest-asyncio
 kaggle
 chromadb
