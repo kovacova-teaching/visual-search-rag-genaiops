@@ -62,7 +62,8 @@ class VisualSearchEngine:
             # Governance check on output (Generated Description)
             gov_result = self.governance_gate.validate_output(description)
             if not gov_result['passed']:
-                 mlflow.log_event("GovernanceCheckFailed", {"violations": gov_result['violations']})
+                 mlflow.set_tag("governance_check", "failed")
+                 mlflow.log_dict({"violations": gov_result['violations']}, "governance_violations.json")
                  return "[CONTENT BLOCKED]"
             
             mlflow.log_text(description, "generated_description.txt")
@@ -104,7 +105,8 @@ class VisualSearchEngine:
             # Governance check on input (Text Query)
             gov_check = self.governance_gate.validate_input(query_text)
             if not gov_check['passed']:
-                 mlflow.log_event("GovernanceCheckFailed", {"violations": gov_check['violations']})
+                 mlflow.set_tag("governance_check", "failed")
+                 mlflow.log_dict({"violations": gov_check['violations']}, "governance_violations.json")
                  return [], "Query blocked by security checks."
 
             mlflow.log_param("k", k)
